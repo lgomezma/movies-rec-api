@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify, request
 from flask.ext import restful
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask.ext.marshmallow import Marshmallow
@@ -43,11 +43,12 @@ with app.app_context():
 
 	class Discover(restful.Resource):
 	    def get(self):
-	    	movies = Movies.query.filter(Movies.poster != None).filter(Movies.year <= 2015).order_by(Movies.year.desc()).limit(5000).all()
+	    	lim = request.args.get('limit', 5000)
+	    	movies = Movies.query.filter(Movies.poster != None).filter(Movies.year <= 2015).order_by(Movies.year.desc()).limit(lim).all()
 	    	result = movie_schema.dump(movies)
 	        return jsonify({"movies":result.data})
 
 	api.add_resource(Discover, '/v1/discover')
 
 	if __name__ == '__main__':
-	    app.run(debug=True)
+	    app.run()
