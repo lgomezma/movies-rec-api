@@ -48,7 +48,7 @@ with app.app_context():
 	    	result = movie_schema.dump(movies)
 	        return jsonify({"movies":result.data})
 
-	api.add_resource(Discover, '/v1/discover')
+	api.add_resource(Discover, '/v1/discover','/v1/discover.json')
 
 	if __name__ == '__main__':
 	    app.run()
