@@ -42,5 +42,18 @@ with app.app_context():
 
 	api.add_resource(Discover, '/v1/discover','/v1/discover.json')
 
+	class Wishlist(restful.Resource):
+		def get(self):
+			return jsonify({'whishlist':''})
+
+		def post(self):
+			args = parser.parse_args()
+			return jsonify({'error':'none'})
+
+		def delete(self):
+			return jsonify({'error':False, 'message':'wishlist item'})
+
+	api.add_resource(Wishlist, '/v1/wishlist','/v1/wishlist.json')
+
 	if __name__ == '__main__':
 	    app.run()
