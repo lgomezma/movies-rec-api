@@ -35,6 +35,5 @@ class Users(db.Model):
 	id = db.Column(db.Integer, primary_key=True)
 	device_token = db.Column(db.String(255),unique=True)
 
-	def __init__(self, id, device_token):
-		self.id = id
+	def __init__(self, device_token):
 		self.device_token = device_token

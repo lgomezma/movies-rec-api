@@ -21,6 +21,7 @@ with app.app_context():
 	from MoviesApp import models
 
 	Movies = models.Movies
+	Users = models.Users
 
 	##### SCHEMAS #####
 
@@ -54,6 +55,19 @@ with app.app_context():
 			return jsonify({'error':False, 'message':'wishlist item'})
 
 	api.add_resource(Wishlist, '/v1/wishlist','/v1/wishlist.json')
+
+	
+	class RegisterDevice(restful.Resource):
+		def post(self):
+			device_token = request.json.get('device_token')
+			user = Users(device_token)
+			db.session.add(user)
+			db.session.commit()
+			return jsonify({'user_id':user.id})
+			
+
+	api.add_resource(RegisterDevice, '/v1/registerdevice','/v1/registerdevice.json')
+	
 
 	if __name__ == '__main__':
 	    app.run()
